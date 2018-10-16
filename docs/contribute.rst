@@ -10,10 +10,10 @@ Enviroment
 To work on the project you need the following packages
 in addition to `wifiphisher` requirments:
 
-- python3_ used for linters.
-- tox_ used for running tests.
-- yapf_ used for code formatting.
-- sphinx_ used for building documentation.
+- python3_
+- tox_
+- yapf_
+- sphinx_
 
 .. _python3: https://www.python.org/
 .. _tox: https://tox.readthedocs.io/en/latest/
@@ -240,3 +240,10 @@ you do so by adding this line to your settings:
 .. code::
 
     "python.formatting.provider": "yapf"
+
+Tox tests
+###########
+Tox runs the following tests:
+
+* All unit tests located under `tests` directory
+* YAPF with configuration located in `.style.yapf` file.
