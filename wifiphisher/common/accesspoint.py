@@ -1,7 +1,6 @@
 """This module was made to fork the rogue access point."""
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import (absolute_import, division, print_function, unicode_literals)
 import os
 import time
 import subprocess
@@ -63,19 +62,16 @@ class AccessPoint(object):
                              stdout=subprocess.PIPE,
                              stderr=constants.DN)
         except OSError:
-            print("[{}!{}] dnsmasq is not installed!".format(
-                constants.R, constants.W))
+            print("[{}!{}] dnsmasq is not installed!".format(constants.R, constants.W))
             raise Exception
 
-        subprocess.Popen(
-            ['ifconfig', str(self.interface), 'mtu', '1400'],
-            stdout=constants.DN,
-            stderr=constants.DN)
+        subprocess.Popen(['ifconfig', str(self.interface), 'mtu', '1400'],
+                         stdout=constants.DN,
+                         stderr=constants.DN)
 
         subprocess.Popen([
             'ifconfig',
-            str(self.interface), 'up', constants.NETWORK_GW_IP, 'netmask',
-            constants.NETWORK_MASK
+            str(self.interface), 'up', constants.NETWORK_GW_IP, 'netmask', constants.NETWORK_MASK
         ],
                          stdout=constants.DN,
                          stderr=constants.DN)
@@ -106,23 +102,17 @@ class AccessPoint(object):
                     hostapd_config["karma_enable"] = 1
                 # Enable WPSPBC KARMA attack
                 hostapd_config["wpspbc"] = True
-                hostapd_options = {
-                    'mute': True,
-                    'timestamp': False,
-                    "eloop_term_disable": True
-                }
+                hostapd_options = {'mute': True, 'timestamp': False, "eloop_term_disable": True}
                 self.hostapd_object.start(hostapd_config, hostapd_options)
             except KeyboardInterrupt:
                 raise Exception
             except BaseException:
-                print(
-                    "[{}!{}] Roguehostapd is not installed in the system! Please install"
-                    " roguehostapd manually (https://github.com/wifiphisher/roguehostapd)"
-                    " and rerun the script. Otherwise, you can run the tool with the"
-                    " --force-hostapd option to use hostapd but please note that using"
-                    " Wifiphisher with hostapd instead of roguehostapd will turn off many"
-                    " significant features of the tool.".format(
-                        constants.R, constants.W))
+                print("[{}!{}] Roguehostapd is not installed in the system! Please install"
+                      " roguehostapd manually (https://github.com/wifiphisher/roguehostapd)"
+                      " and rerun the script. Otherwise, you can run the tool with the"
+                      " --force-hostapd option to use hostapd but please note that using"
+                      " Wifiphisher with hostapd instead of roguehostapd will turn off many"
+                      " significant features of the tool.".format(constants.R, constants.W))
                 # just raise exception when hostapd is not installed
                 raise Exception
         else:
@@ -134,17 +124,15 @@ class AccessPoint(object):
                     stdout=constants.DN,
                     stderr=constants.DN)
             except OSError:
-                print(
-                    "[{}!{}] hostapd is not installed in the system! Please download it"
-                    " using your favorite package manager (e.g. apt-get install hostapd) and "
-                    "rerun the script.".format(constants.R, constants.W))
+                print("[{}!{}] hostapd is not installed in the system! Please download it"
+                      " using your favorite package manager (e.g. apt-get install hostapd) and "
+                      "rerun the script.".format(constants.R, constants.W))
                 # just raise exception when hostapd is not installed
                 raise Exception
 
             time.sleep(2)
             if self.hostapd_object.poll() is not None:
-                print("[{}!{}] hostapd failed to lunch!".format(
-                    constants.R, constants.W))
+                print("[{}!{}] hostapd failed to lunch!".format(constants.R, constants.W))
                 raise Exception
 
     def on_exit(self):
@@ -185,8 +173,7 @@ class AccessPoint(object):
                     existing_victim = victims_instance.victims_dic[mac_address]
                     if ip_address == existing_victim.ip_address:
                         return
-                    existing_victim.assign_ip_to_victim(
-                        mac_address, ip_address)
+                    existing_victim.assign_ip_to_victim(mac_address, ip_address)
                 else:
                     new_victim = victim.Victim(mac_address, ip_address)
                     victims_instance.add_to_victim_dic(new_victim)

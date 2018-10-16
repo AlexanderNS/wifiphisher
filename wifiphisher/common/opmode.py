@@ -71,10 +71,8 @@ class OpMode(object):
                      '] Pre-shared key must be between 8 and 63 printable'
                      'characters.')
 
-        if args.handshake_capture and not os.path.isfile(
-                args.handshake_capture):
-            sys.exit('[' + constants.R + '-' + constants.W +
-                     '] Handshake capture does not exist.')
+        if args.handshake_capture and not os.path.isfile(args.handshake_capture):
+            sys.exit('[' + constants.R + '-' + constants.W + '] Handshake capture does not exist.')
         elif args.handshake_capture and not handshakeverify.\
                 is_valid_handshake_capture(args.handshake_capture):
             sys.exit('[' + constants.R + '-' + constants.W +
@@ -97,18 +95,16 @@ class OpMode(object):
                      '] --lure10-exploit (-lE) and --noextensions (-eJ)'
                      'cannot work together.')
 
-        if args.lure10_exploit and not os.path.isfile(constants.LOCS_DIR +
-                                                      args.lure10_exploit):
+        if args.lure10_exploit and not os.path.isfile(constants.LOCS_DIR + args.lure10_exploit):
             sys.exit('[' + constants.R + '-' + constants.W +
                      '] Lure10 capture does not exist. Listing directory'
                      'of captures: ' + str(os.listdir(constants.LOCS_DIR)))
 
         if (args.mac_ap_interface and args.no_mac_randomization) or \
                 (args.mac_extensions_interface and args.no_mac_randomization):
-            sys.exit(
-                '[' + constants.R + '-' + constants.W +
-                '] --no-mac-randomization (-iNM) cannot work together with'
-                '--mac-ap-interface or --mac-extensions-interface (-iDM)')
+            sys.exit('[' + constants.R + '-' + constants.W +
+                     '] --no-mac-randomization (-iNM) cannot work together with'
+                     '--mac-ap-interface or --mac-extensions-interface (-iDM)')
 
         if args.deauth_essid and args.noextensions:
             sys.exit('[' + constants.R + '-' + constants.W +
@@ -124,10 +120,8 @@ class OpMode(object):
 
         # args.wAI should be used with args.wE
         if args.wpspbc_assoc_interface and not args.wps_pbc:
-            sys.exit(
-                '[' + constants.R + '!' + constants.W +
-                '] --wpspbc-assoc-interface (-wAI) requires --wps-pbc (-wP) option.'
-            )
+            sys.exit('[' + constants.R + '!' + constants.W +
+                     '] --wpspbc-assoc-interface (-wAI) requires --wps-pbc (-wP) option.')
 
         # if args.logpath is defined args.logging must be set too
         if args.logpath and not args.logging:
@@ -136,9 +130,8 @@ class OpMode(object):
 
         # if args.credential_log_path is defined args.logging must be set too
         if args.credential_log_path and not args.logging:
-            sys.exit(
-                '[' + constants.R + '!' + constants.W +
-                '] --credential-log-path (-cP) requires --logging option.')
+            sys.exit('[' + constants.R + '!' + constants.W +
+                     '] --credential-log-path (-cP) requires --logging option.')
 
     def set_opmode(self, args, network_manager):
         """
@@ -238,9 +231,7 @@ class OpMode(object):
         :rtype: bool
         """
 
-        return self.op_mode in [
-            constants.OP_MODE2, constants.OP_MODE3, constants.OP_MODE6
-        ]
+        return self.op_mode in [constants.OP_MODE2, constants.OP_MODE3, constants.OP_MODE6]
 
     def extensions_enabled(self):
         """
@@ -251,8 +242,8 @@ class OpMode(object):
         """
 
         return self.op_mode in [
-            constants.OP_MODE1, constants.OP_MODE2, constants.OP_MODE5,
-            constants.OP_MODE6, constants.OP_MODE7, constants.OP_MODE8
+            constants.OP_MODE1, constants.OP_MODE2, constants.OP_MODE5, constants.OP_MODE6,
+            constants.OP_MODE7, constants.OP_MODE8
         ]
 
     def freq_hopping_enabled(self):
@@ -266,9 +257,7 @@ class OpMode(object):
         lunch ap so it is not allowed to do frequency hopping.
         """
 
-        return self.op_mode in [
-            constants.OP_MODE1, constants.OP_MODE2, constants.OP_MODE7
-        ]
+        return self.op_mode in [constants.OP_MODE1, constants.OP_MODE2, constants.OP_MODE7]
 
     def assoc_enabled(self):
         """

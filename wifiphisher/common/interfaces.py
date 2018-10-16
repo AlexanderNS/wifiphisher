@@ -32,13 +32,11 @@ class InvalidInterfaceError(Exception):
         :rtype: None
         """
 
-        message = "The provided interface \"{0}\" is invalid!".format(
-            interface_name)
+        message = "The provided interface \"{0}\" is invalid!".format(interface_name)
 
         # provide more information if mode is given
         if mode:
-            message += "Interface {0} doesn't support {1} mode".format(
-                interface_name, mode)
+            message += "Interface {0} doesn't support {1} mode".format(interface_name, mode)
 
         Exception.__init__(self, message)
 
@@ -59,8 +57,7 @@ class InvalidMacAddressError(Exception):
         :return: None
         :rtype: None
         """
-        message = "The MAC address could not be set. (Tried {0})".format(
-            mac_address)
+        message = "The MAC address could not be set. (Tried {0})".format(mac_address)
         Exception.__init__(self, message)
 
 
@@ -141,12 +138,11 @@ class InterfaceManagedByNetworkManagerError(Exception):
         :rtype: None
         """
 
-        message = (
-            "Interface \"{0}\" is controlled by NetworkManager."
-            "You need to manually set the devices that should be ignored by NetworkManager "
-            "using the keyfile plugin (unmanaged-directive). For example, '[keyfile] "
-            "unmanaged-devices=interface-name:\"{0}\"' needs to be added in your "
-            "NetworkManager configuration file.".format(interface_name))
+        message = ("Interface \"{0}\" is controlled by NetworkManager."
+                   "You need to manually set the devices that should be ignored by NetworkManager "
+                   "using the keyfile plugin (unmanaged-directive). For example, '[keyfile] "
+                   "unmanaged-devices=interface-name:\"{0}\"' needs to be added in your "
+                   "NetworkManager configuration file.".format(interface_name))
         Exception.__init__(self, message)
 
 
@@ -563,8 +559,7 @@ class NetworkManager(object):
         possible_adapters = list()
         for interface, adapter in self._name_to_object.iteritems():
             # check to make sure interface is not active and not already in the possible list
-            if (interface not in self._active) and (
-                    adapter not in possible_adapters):
+            if (interface not in self._active) and (adapter not in possible_adapters):
                 # in case of perfect match case
                 if (adapter.has_ap_mode == has_ap_mode
                         and adapter.has_monitor_mode == has_monitor_mode):
@@ -813,8 +808,7 @@ def is_add_vif_required(args):
             perfect_card = card
             use_one_phy = True
     else:
-        perfect_card, use_one_phy = get_perfect_card(phy_to_vifs,
-                                                     vif_score_tuples)
+        perfect_card, use_one_phy = get_perfect_card(phy_to_vifs, vif_score_tuples)
 
     return perfect_card, use_one_phy
 
@@ -833,10 +827,9 @@ def is_managed_by_network_manager(interface_name):
 
     is_managed = False
     try:
-        nmcli_process = Popen(
-            ['/bin/sh', '-c', 'export LC_ALL=C; nmcli dev; unset LC_ALL'],
-            stdout=constants.DN,
-            stderr=PIPE)
+        nmcli_process = Popen(['/bin/sh', '-c', 'export LC_ALL=C; nmcli dev; unset LC_ALL'],
+                              stdout=constants.DN,
+                              stderr=PIPE)
         out, err = nmcli_process.communicate()
 
         if err == None and out != "":
@@ -886,8 +879,7 @@ def interface_property_detector(network_adapter):
         network_adapter.has_ap_mode = True
 
     interface_name = network_adapter.name
-    network_adapter.is_managed_by_nm = is_managed_by_network_manager(
-        interface_name)
+    network_adapter.is_managed_by_nm = is_managed_by_network_manager(interface_name)
 
 
 def is_wireless_interface(interface_name):

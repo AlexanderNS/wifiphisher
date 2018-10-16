@@ -63,19 +63,15 @@ class Knownbeacons(object):
                 # craft the required packet parts
                 frame_part_0 = dot11.RadioTap()
                 frame_part_1 = dot11.Dot11(
-                    subtype=8,
-                    addr1=constants.WIFI_BROADCAST,
-                    addr2=bssid,
-                    addr3=bssid)
+                    subtype=8, addr1=constants.WIFI_BROADCAST, addr2=bssid, addr3=bssid)
                 frame_part_2 = dot11.Dot11Beacon(cap=constants.KB_BEACON_CAP)
                 frame_part_3 = dot11.Dot11Elt(ID="SSID", info=essid)
-                frame_part_4 = dot11.Dot11Elt(
-                    ID="Rates", info=constants.AP_RATES)
+                frame_part_4 = dot11.Dot11Elt(ID="Rates", info=constants.AP_RATES)
                 frame_part_5 = dot11.Dot11Elt(ID="DSset", info=chr(7))
 
                 # create a complete packet by combining the parts
-                complete_frame = (frame_part_0 / frame_part_1 / frame_part_2 /
-                                  frame_part_3 / frame_part_4 / frame_part_5)
+                complete_frame = (frame_part_0 / frame_part_1 / frame_part_2 / frame_part_3 /
+                                  frame_part_4 / frame_part_5)
                 # add the frame to the list
                 beacons.append(complete_frame)
         return beacons
@@ -101,17 +97,15 @@ class Knownbeacons(object):
             self._full_pkt_list = self._full_pkt_list[constants.KB_BUCKET_SIZE:] + \
                                     self._full_pkt_list[:constants.KB_BUCKET_SIZE]
             self._starttime = time.time()
-            first_essid = self._full_pkt_list[0][dot11.Dot11Elt].info.decode(
-                "utf8")
-            last_essid = self._full_pkt_list[constants.KB_BUCKET_SIZE - 1][
-                dot11.Dot11Elt].info.decode("utf8")
+            first_essid = self._full_pkt_list[0][dot11.Dot11Elt].info.decode("utf8")
+            last_essid = self._full_pkt_list[constants.KB_BUCKET_SIZE -
+                                             1][dot11.Dot11Elt].info.decode("utf8")
 
             self._msg.append("Sending %s known beacons (%s ... %s)" % \
                             (str(constants.KB_BUCKET_SIZE), first_essid, \
                             last_essid))
 
-        self._packets_to_send["*"] = self._full_pkt_list[:constants.
-                                                         KB_BUCKET_SIZE]
+        self._packets_to_send["*"] = self._full_pkt_list[:constants.KB_BUCKET_SIZE]
         return self._packets_to_send
 
     def send_output(self):

